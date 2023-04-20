@@ -1,5 +1,10 @@
 # Discord Image Creation Bot
 
+## Requirements
+
+* Node.js above 16.9.0
+* Python 3.10.6 (for stable diffusion webui) and add to PATH
+
 ## Scripts
 
 * start:bot (`npm run start:bot`): Start discord bot.
