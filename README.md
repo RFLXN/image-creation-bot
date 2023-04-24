@@ -10,7 +10,37 @@
 * start:bot (`npm run start:bot`): Start discord bot.
 * start:webui (`npm run start:webui`): Start webui API server.
 
-## Before start bot
+## Setting preset
+
+add `resource/preset/*.preset.json` file for using preset-based image generation.    
+(for command: `/generate basic`)
+
+preset interface here
+
+```typescript
+// in src/type/image.ts
+interface Preset {
+    id: number;
+    description: string;
+    model: {
+        name: string;
+        hash: string;
+    };
+    vae?: string;
+    lora?: {
+        name: string;
+        weight?: number;
+    }[];
+    sampler?: string;
+    defaultPrompt?: string;
+    steps: number;
+    height: number;
+    width: number;
+    batchSize?: number;
+}
+```
+
+## Setting bot token
 
 copy `resource/discord.example.json` and paste `resource/discord.json`.   
 after that edit your discord bot token.

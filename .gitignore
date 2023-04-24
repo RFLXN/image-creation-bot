@@ -128,11 +128,6 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-# Dependenct lock file
-package-lock.json
-yarn.lock
-pnpm-lock.yaml
-
 # IntelliJ (Webstorm) project files
 .idea
 

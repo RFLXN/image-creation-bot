@@ -1,6 +1,6 @@
 import { img2img } from "./api/img2img";
 import { FailResult, Result, SuccessResult } from "../type/result";
-import { CreatedImage, Model } from "../type/image";
+import { Model, RawInfoCreatedImage } from "../type/image";
 
 const SCRIPT_NAME = "sd upscale";
 
@@ -13,6 +13,7 @@ interface ImageUpscaleOptions {
     steps: number;
     args: UpscaleScriptArgs;
     denoisingStrength: number;
+    sampler?: string;
 }
 
 interface UpscaleScriptArgs {
@@ -23,7 +24,7 @@ interface UpscaleScriptArgs {
 
 const createScriptArgs = (args: UpscaleScriptArgs) => [SCRIPT_NAME, args.overlap, args.upscalerIndex, args.scaleFactor];
 
-const upscaleImage = async (options: ImageUpscaleOptions): Promise<Result<CreatedImage>> => {
+const upscaleImage = async (options: ImageUpscaleOptions): Promise<Result<RawInfoCreatedImage>> => {
     try {
         const res = await img2img({
             initImages: [options.base64Image],
@@ -38,16 +39,17 @@ const upscaleImage = async (options: ImageUpscaleOptions): Promise<Result<Create
                 sdVae: options.vae ? options.vae : "Automatic"
             },
             denoisingStrength: options.denoisingStrength,
-            saveImages: false
+            saveImages: false,
+            samplerName: options.sampler ? options.sampler : null
         });
 
         return {
             data: {
                 info: res.info,
-                base64image: res.images[0]
+                base64images: res.images
             },
             success: true
-        } as SuccessResult<CreatedImage>;
+        } as SuccessResult<RawInfoCreatedImage>;
     } catch (e) {
         return {
             success: false,

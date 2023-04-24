@@ -20,6 +20,7 @@ import {
 } from "./command";
 import { setCommands } from "./command-register";
 import { Command } from "./type/discord-command";
+import { loadPreset } from "./webui/preset";
 
 // top-level async wrap
 (async () => {
@@ -60,6 +61,8 @@ import { Command } from "./type/discord-command";
                 .concat(ContextMenuCommandManager.instance.getCommands());
 
             await setCommands(discordRest, client.application.id, commands);
+
+            await loadPreset();
         } catch (e) {
             // shutting down when failed to register commands
             error(e);

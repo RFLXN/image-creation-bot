@@ -24,6 +24,10 @@ const applySlashCommandEventHandler = () => {
     });
 
     manager.on("commandFail", (command, interaction, e) => {
+        if (!interaction.replied) {
+            interaction.reply(e.message).catch((err) => error(err));
+        }
+
         error(`Slash command failed: ${command.data.name} (${interaction.id})`);
         error(e);
     });
@@ -50,6 +54,10 @@ const applyContextMenuCommandEventHandler = () => {
     });
 
     manager.on("commandFail", (command, interaction, e) => {
+        if (!interaction.replied) {
+            interaction.reply(e.message).catch((err) => error(err));
+        }
+
         error(`Slash command failed: ${command.data.name} (${interaction.id})`);
         error(e);
     });
