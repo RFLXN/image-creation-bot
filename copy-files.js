@@ -13,10 +13,12 @@ const copyFiles = async (files, src, sdDest, autoDest) => {
         const autoTarget = resolve(autoDest, fileName);
 
         await cp(target, sdTarget, {
-            recursive: true
+            recursive: true,
+            force: true
         });
         await cp(target, autoTarget, {
-            recursive: true
+            recursive: true,
+            force: true
         });
 
         console.log(`File copied: '${target}'\n\tto '${sdTarget}'\n\tand '${autoTarget}'`);
@@ -73,9 +75,9 @@ const copyWebuiScripts = async () => {
     const sh = resolve(__dirname, "webui-user.sh");
     const bat = resolve(__dirname, "webui-user.bat");
 
-    await cp(py, resolve(WEBUI, "webui.py"));
-    await cp(sh, resolve(WEBUI, "webui-user.sh"));
-    await cp(bat, resolve(WEBUI, "webui-user.bat"));
+    await cp(py, resolve(WEBUI, "webui.py"), {force: true});
+    await cp(sh, resolve(WEBUI, "webui-user.sh"), {force: true});
+    await cp(bat, resolve(WEBUI, "webui-user.bat"), {force: true});
 
     console.log(`File copied: '${py}'\n\tand '${sh}'\n\tand '${bat}'\n\tto '${WEBUI}'`);
 }

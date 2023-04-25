@@ -29,10 +29,7 @@ const runAutomatic = () => {
     const script = resolve(AUTOMATIC_PATH, AUTOMATIC_SCRIPT);
 
     const automaticProcess = spawn(script, {
-        cwd: AUTOMATIC_PATH,
-        env: {
-            COMMANDLINE_ARGS: "--nowebui"
-        }
+        cwd: AUTOMATIC_PATH
     });
 
     automaticProcess.stdout.pipe(stdout);
