@@ -1,4 +1,4 @@
-import { img2img } from "./api/img2img";
+import { img2img } from "./api";
 import { FailResult, Result, SuccessResult } from "../type/result";
 import { Model, RawInfoCreatedImage } from "../type/image";
 

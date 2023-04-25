@@ -10,6 +10,15 @@
 * start:bot (`npm run start:bot`): Start discord bot.
 * start:webui (`npm run start:webui`): Start webui API server.
 
+## Setting models
+
+* Put your webui extensions in `resource/sd-files/extensions`.
+* Put your Stable-diffusion models in `resource/sd-files/models/Stable-diffusion`.
+* Put your Lora models in `resource/sd-files/models/Lora`.
+* Put your VAE models in `resource/sd-files/models/VAE`.
+
+This files will be copied into webui or automatic files.
+
 ## Setting preset
 
 add `resource/preset/*.preset.json` file for using preset-based image generation.    
@@ -24,7 +33,7 @@ interface Preset {
     description: string;
     model: {
         name: string;
-        hash: string;
+        hash?: string;
     };
     vae?: string;
     lora?: {
@@ -37,13 +46,19 @@ interface Preset {
     height: number;
     width: number;
     batchSize?: number;
+    scriptArgs?: string[];
 }
 ```
 
 ## Setting bot token
 
 copy `resource/discord.example.json` and paste `resource/discord.json`.   
-after that edit your discord bot token.
+After that edit your discord bot token.
+
+## Setting API Server
+
+copy `resource/webui.example.json` and paste `resource/webui.json`.
+If you want to use AUTOMATIC, edit it to true
 
 ## stable-diffusion-webui API
 

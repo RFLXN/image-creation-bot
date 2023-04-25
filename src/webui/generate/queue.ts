@@ -1,6 +1,7 @@
 import { EventEmitter, EventType } from "../../util/event-emitter";
 import { ImageGenerateOption } from "./generate";
 import { randomInt } from "../../util/random";
+import { log } from "../../util/log";
 
 interface ImageGenerateQueue {
     userId: string;
@@ -80,5 +81,23 @@ class QueueManager extends EventEmitter<ImageGenerateQueueEvent> {
     }
 }
 
-export { AddedImageGenerateQueue };
+const applyEventHandlers = () => {
+    const manager = QueueManager.instance;
+
+    manager.on("queueAdded", (queue) => {
+        log(`Image generate queue added: ${queue.id} (from user: ${queue.userId})\n\t`
+            + `with model: ${queue.option.model.name}\n\t`
+            + `with prompt: ${queue.option.prompt}`);
+    });
+
+    manager.on("queueRejected", (queue) => {
+        log(`Image generate queue rejected: ${queue.id}`);
+    });
+
+    manager.on("queuePopped", (queue) => {
+        log(`Queue Popped: ${queue.id}`);
+    });
+};
+
+export { AddedImageGenerateQueue, applyEventHandlers };
 export default QueueManager;

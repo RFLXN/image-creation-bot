@@ -7,7 +7,7 @@ import camelize from "camelize";
 // @ts-ignore
 import snakeize from "snakeize";
 
-const BASE_URL = "http://127.0.0.1:7861";
+const BASE_URL = "http://127.0.0.1:7860";
 const createUrl = (path: string) => `${BASE_URL}${path}`;
 
 const post = async <Req, Res>(path: string, data?: Req): Promise<Res> => {

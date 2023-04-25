@@ -41,7 +41,7 @@ interface CreatedImage {
 
 interface Model {
     name: string;
-    hash: string;
+    hash?: string;
 }
 
 interface Lora {
@@ -62,6 +62,7 @@ interface Preset {
     width: number;
     batchSize?: number;
     cfgScale?: number;
+    scriptArgs?: string[];
 }
 
 export {

@@ -118,7 +118,7 @@ const doBasic = async (interaction: ChatInputCommandInteraction) => {
 
         const queueEmbed = new EmbedBuilder()
             .setTitle("Generate Image")
-            .setDescription(`Queued in position ${manager.getQueueIndex(queue)}`);
+            .setDescription(`Queued in position ${manager.getQueueIndex(queue)} with ID ${queue.id}`);
 
         modalMessagePromise = awaitedModal.reply({
             embeds: [queueEmbed],

@@ -5,8 +5,9 @@ import {
     CreatedImage, ImageInfo, Lora, Model, RawInfoCreatedImage
 } from "../../type/image";
 import { createLoraTag } from "../lora";
-import { txt2img } from "../api";
+import { txt2img, Txt2imgReq } from "../api";
 import { FailResult, Result, SuccessResult } from "../../type/result";
+import omit from "../../util/omit";
 
 interface ImageGenerateOption {
     prompt: string;
@@ -20,6 +21,7 @@ interface ImageGenerateOption {
     sampler?: string;
     batchSize?: number;
     cfgScale?: number;
+    scriptArgs?: string[];
 }
 
 const generate = async (option: ImageGenerateOption): Promise<Result<CreatedImage | RawInfoCreatedImage>> => {
@@ -32,9 +34,9 @@ const generate = async (option: ImageGenerateOption): Promise<Result<CreatedImag
             });
         }
 
-        const res = await txt2img({
+        let o: Partial<Txt2imgReq> = {
             prompt,
-            negativePrompt: option.negativePrompt ? option.negativePrompt : null,
+            negativePrompt: option.negativePrompt,
             height: option.height,
             width: option.width,
             steps: option.steps,
@@ -47,8 +49,25 @@ const generate = async (option: ImageGenerateOption): Promise<Result<CreatedImag
             saveImages: false,
             sendImages: true,
             batchSize: option.batchSize ? option.batchSize : 1,
-            cfgScale: option.cfgScale ? option.cfgScale : null
-        });
+            cfgScale: option.cfgScale,
+            scriptArgs: option.scriptArgs,
+            scriptName: option.scriptArgs[0]
+        };
+
+        if (!option.negativePrompt) {
+            o = omit(o, "negativePrompt");
+        }
+
+        if (!option.cfgScale) {
+            o = omit(o, "cfgScale");
+        }
+
+        if (!option.scriptArgs) {
+            o = omit(o, "scriptArgs");
+            o = omit(o, "scriptName");
+        }
+
+        const res = await txt2img(o);
 
         const { images, info } = res;
 

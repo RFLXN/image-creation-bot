@@ -1,6 +1,6 @@
 import { ChatInputCommandInteraction } from "discord.js";
 import BotAdminCommand from "./command";
-import { reloadModels } from "../../../webui/api/reload-models";
+import { reloadModels } from "../../../webui/api";
 
 const reloadModel: BotAdminCommand = {
     name: "Reload models",

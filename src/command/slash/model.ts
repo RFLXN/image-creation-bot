@@ -1,6 +1,6 @@
 import { ChatInputCommandInteraction, EmbedBuilder, SlashCommandBuilder } from "discord.js";
 import { SlashCommand } from "../../type/discord-command";
-import { getModels } from "../../webui/api/models";
+import { getModels } from "../../webui/api";
 
 const model: SlashCommand = {
     data: new SlashCommandBuilder()

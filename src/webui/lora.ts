@@ -1,7 +1,8 @@
 import { readdir } from "fs/promises";
-import { resolve, WEBUI_ROOT } from "../util/path";
+import { resolve } from "../util/path";
+import { getServerPath } from "./config";
 
-const LORA_PATH = resolve(WEBUI_ROOT, "models", "Lora");
+const LORA_PATH = resolve(getServerPath(), "models", "Lora");
 
 const getLoraList = async (): Promise<string[]> => (await readdir(LORA_PATH))
     .filter(
@@ -10,6 +11,7 @@ const getLoraList = async (): Promise<string[]> => (await readdir(LORA_PATH))
     .map(
         (raw) => raw.replace(".safetensors", "")
             .replace(".pt", "")
+            .replace(".ckpt", "")
     );
 
 const createLoraTag = (loraName: string, weight: number) => `<lora:${loraName}:${weight}>`;

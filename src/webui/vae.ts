@@ -1,7 +1,8 @@
 import { readdir } from "fs/promises";
-import { resolve, WEBUI_ROOT } from "../util/path";
+import { resolve } from "../util/path";
+import { getServerPath } from "./config";
 
-const VAE_PATH = resolve(WEBUI_ROOT, "models", "VAE");
+const VAE_PATH = resolve(getServerPath(), "models", "VAE");
 
 const getVaeList = async (): Promise<string[]> => (await readdir(VAE_PATH))
     .filter((raw) => raw.endsWith(".pt") || raw.endsWith(".ckpt") || raw.endsWith(".safetensors"));

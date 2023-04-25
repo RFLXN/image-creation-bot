@@ -1,6 +1,6 @@
 const {resolve} = require("path");
 const {spawn} = require("child_process")
-const {platform, exit, stdout, stderr} = require("node:process");
+const {platform, exit, stdout, stderr, stdin} = require("node:process");
 
 const CONFIG = require("./resource/webui.json");
 
@@ -19,6 +19,7 @@ const runWebUi = () => {
 
     webuiProcess.stdout.pipe(stdout);
     webuiProcess.stderr.pipe(stderr);
+    stdin.pipe(webuiProcess.stdin);
 
     webuiProcess.on("exit", (code) => {
         exit(code);
@@ -34,6 +35,7 @@ const runAutomatic = () => {
 
     automaticProcess.stdout.pipe(stdout);
     automaticProcess.stderr.pipe(stderr);
+    stdin.pipe(automaticProcess.stdin);
 
     automaticProcess.on("exit", (code) => {
         exit(code);

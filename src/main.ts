@@ -6,9 +6,6 @@ import {
     IntentsBitField,
     REST
 } from "discord.js";
-import { readJson } from "./util/json";
-import { resolve, RESOURCE_ROOT } from "./util/path";
-import DiscordConfig from "./type/discord-config";
 import { error, log } from "./util/log";
 import {
     applyAutocompleteEventHandler,
@@ -21,10 +18,13 @@ import {
 import { setCommands } from "./command-register";
 import { Command } from "./type/discord-command";
 import { loadPreset } from "./webui/preset";
+import { getDiscordConfig } from "./config";
+import { loadConfig } from "./webui/config";
+import { applyEventHandlers } from "./webui/generate/queue";
 
 // top-level async wrap
 (async () => {
-    const discordConfig = await readJson<DiscordConfig>(resolve(RESOURCE_ROOT, "discord.json"));
+    const discordConfig = await getDiscordConfig();
 
     const discordClient: Client<true> = new Client({
         intents: [
@@ -49,6 +49,9 @@ import { loadPreset } from "./webui/preset";
         log(`with Token: ${client.token}`);
 
         try {
+            await loadConfig();
+            applyEventHandlers();
+
             applySlashCommandEventHandler();
             applyContextMenuCommandEventHandler();
             applyAutocompleteEventHandler();
