@@ -12,15 +12,13 @@
     "start:bot": "node ./dist/main.js",
     "prestart:bot": "yarpm run compile",
     "submodule": "git submodule init && git submodule update",
-    "override:bat": "copyfiles webui-user.bat stable-diffusion-webui",
-    "override:sh": "copyfiles webui-user.sh stable-diffusion-webui",
-    "override:webui": "copyfiles webui.py stable-diffusion-webui",
-    "override": "yarpm run override:bat && yarpm run override:sh && yarpm run override:webui",
+    "copyfiles": "node copy-files.js",
     "start:webui": "node ./run-webui.js",
-    "prestart:webui": "yarpm run submodule && yarpm run override",
+    "prestart:webui": "yarpm run submodule && yarpm run copyfiles",
     "start:test": "node ./dist/test.js",
     "prestart:test": "yarpm run compile",
     "lockfile:yarn": "synp --source-file yarn.lock",
+    "prelockfile:yarn": "rimraf package-lock.json",
     "lockfile:npm": "synp --source-file package-lock.json"
   },
   "dependencies": {
@@ -31,10 +29,8 @@
     "snakeize": "^0.1.0"
   },
   "devDependencies": {
-    "@openapitools/openapi-generator-cli": "^2.6.0",
     "@typescript-eslint/eslint-plugin": "^5.58.0",
     "@typescript-eslint/parser": "^5.58.0",
-    "copyfiles": "^2.4.1",
     "eslint": "^8.38.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-airbnb-typescript": "^17.0.0",

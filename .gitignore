@@ -133,9 +133,10 @@ dist
 
 # Configuration resource file
 resource/discord.json
+resource/webui.json
 
 # Submodule
-stable-diffusion-webui
+
 
 # Dev test file
 src/test.ts

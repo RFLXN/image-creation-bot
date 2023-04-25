@@ -27,7 +27,8 @@ const basicGenerate = async (option: BasicGenerateOption, beforeGen?: (queue: Ad
         width: preset.width,
         sampler: preset.sampler ? preset.sampler : null,
         steps: preset.steps,
-        batchSize: preset.batchSize ? preset.batchSize : null
+        batchSize: preset.batchSize ? preset.batchSize : null,
+        cfgScale: preset.cfgScale ? preset.cfgScale : null
     };
 
     const queue = QueueManager.instance.addQueue({ userId: option.userId, option: o });

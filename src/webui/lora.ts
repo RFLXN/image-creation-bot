@@ -5,7 +5,7 @@ const LORA_PATH = resolve(WEBUI_ROOT, "models", "Lora");
 
 const getLoraList = async (): Promise<string[]> => (await readdir(LORA_PATH))
     .filter(
-        (raw) => raw.endsWith(".safetensors") || raw.endsWith(".pt")
+        (raw) => raw.endsWith(".safetensors") || raw.endsWith(".pt") || raw.endsWith(".ckpt")
     )
     .map(
         (raw) => raw.replace(".safetensors", "")

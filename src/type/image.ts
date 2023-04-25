@@ -61,6 +61,7 @@ interface Preset {
     height: number;
     width: number;
     batchSize?: number;
+    cfgScale?: number;
 }
 
 export {

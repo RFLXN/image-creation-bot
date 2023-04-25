@@ -19,6 +19,7 @@ interface ImageGenerateOption {
     steps: number;
     sampler?: string;
     batchSize?: number;
+    cfgScale?: number;
 }
 
 const generate = async (option: ImageGenerateOption): Promise<Result<CreatedImage | RawInfoCreatedImage>> => {
@@ -45,7 +46,8 @@ const generate = async (option: ImageGenerateOption): Promise<Result<CreatedImag
             samplerIndex: option.sampler ? option.sampler : "Euler",
             saveImages: false,
             sendImages: true,
-            batchSize: option.batchSize ? option.batchSize : 1
+            batchSize: option.batchSize ? option.batchSize : 1,
+            cfgScale: option.cfgScale ? option.cfgScale : null
         });
 
         const { images, info } = res;
