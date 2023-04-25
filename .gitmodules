@@ -4,3 +4,6 @@
 [submodule "sd-server/automatic"]
 	path = sd-server/automatic
 	url = https://github.com/vladmandic/automatic.git
+[submodule "sd-server/stable-diffusion-webui"]
+	path = sd-server/stable-diffusion-webui
+	url = https://github.com/AUTOMATIC1111/stable-diffusion-webui.git
