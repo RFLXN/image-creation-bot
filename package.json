@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "lint": "eslint",
-    "lint:fix": "eslint --fix",
+    "lint:fix": "eslint --fix ./src/**/*",
     "clear": "rimraf -g -I ./dist/**/*",
     "compile": "tsc",
     "precompile": "yarpm run lint:fix && yarpm run clear",

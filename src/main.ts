@@ -21,6 +21,7 @@ import { loadPreset } from "./webui/preset";
 import { getDiscordConfig } from "./config";
 import { loadConfig } from "./webui/config";
 import { applyEventHandlers } from "./webui/generate/queue";
+import applyPresence from "./presence";
 
 // top-level async wrap
 (async () => {
@@ -66,6 +67,7 @@ import { applyEventHandlers } from "./webui/generate/queue";
             await setCommands(discordRest, client.application.id, commands);
 
             await loadPreset();
+            await applyPresence(client);
         } catch (e) {
             // shutting down when failed to register commands
             error(e);

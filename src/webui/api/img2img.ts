@@ -4,8 +4,6 @@ import { post } from "./share";
 const PATH = "/sdapi/v1/img2img";
 
 interface Img2imgReq {
-    [key: string]: any;
-
     /**
      * base64 images
      */
@@ -45,13 +43,15 @@ interface Img2imgReq {
     sNoise: number;
     overrideSettings: Partial<Config>;
     overrideSettingsRestoreAfterwards: boolean;
-    scriptArgs: any;
+    scriptArgs: (string | number)[];
     samplerIndex: string;
     includeInitImages: boolean;
     scriptName: string;
     sendImages: boolean;
     saveImages: boolean;
     alwaysonScripts: any;
+
+    [key: string]: any;
 }
 
 interface Img2imgRes {

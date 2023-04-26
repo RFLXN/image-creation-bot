@@ -3,14 +3,17 @@ import { FailResult } from "../../type/result";
 import { generate, ImageGenerateOption } from "./generate";
 import QueueManager, { AddedImageGenerateQueue } from "./queue";
 
-interface BasicGenerateOption {
+interface PresetGenerateOption {
     userId: string;
     prompt: string;
     negativePrompt?: string;
     presetId: number;
 }
 
-const basicGenerate = async (option: BasicGenerateOption, beforeGen?: (queue: AddedImageGenerateQueue) => void) => {
+const presetBasedGenerate = async (
+    option: PresetGenerateOption,
+    beforeGen?: (queue: AddedImageGenerateQueue) => void
+) => {
     const preset = getPreset(option.presetId);
     if (!preset) {
         return {
@@ -79,4 +82,4 @@ const basicGenerate = async (option: BasicGenerateOption, beforeGen?: (queue: Ad
     return result;
 };
 
-export { BasicGenerateOption, basicGenerate };
+export { PresetGenerateOption, presetBasedGenerate };

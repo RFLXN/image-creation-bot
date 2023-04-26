@@ -57,7 +57,14 @@
       }
     ],
     "import/no-extraneous-dependencies": "off",
-    "import/prefer-default-export": "off"
+    "import/prefer-default-export": "off",
+    "prefer-destructuring": [
+      "error",
+      {
+        "array": false,
+        "object": true
+      }
+    ]
   },
   "env": {
     "node": true

@@ -63,12 +63,18 @@ class QueueManager extends EventEmitter<ImageGenerateQueueEvent> {
         return this.queue.findIndex((q) => q.id == queue.id) + 1;
     }
 
+    public getCurrentQueue() {
+        if (this.queue.length > 0) {
+            return this.queue[0];
+        }
+    }
+
     private generateId() {
         const ids = this.queue.map((q) => q.id);
 
         let id = -1;
 
-        while (true) {
+        for (; ;) {
             const generated = randomInt(1, 999);
             const has = ids.find((i) => i == generated);
             if (!has) {

@@ -37,7 +37,7 @@ interface Txt2imgReq {
     sNoise: number;
     overrideSettings: Partial<Config>;
     overrideSettingsRestoreAfterwards: boolean;
-    scriptArgs: any[];
+    scriptArgs: string[];
     samplerIndex: string;
     scriptName: string;
     sendImages: boolean;
