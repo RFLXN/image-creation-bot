@@ -58,7 +58,7 @@ After that edit your discord bot token.
 
 ## Setting API Server
 
-copy `resource/webui.example.json` and paste `resource/webui.json`.
+copy `resource/webui.example.json` and paste `resource/webui.json`.    
 If you want to use AUTOMATIC, edit it to true
 
 ## stable-diffusion-webui API
