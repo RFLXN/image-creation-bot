@@ -19,12 +19,12 @@
 * Put your Lora models in `resource/sd-files/models/Lora`.
 * Put your VAE models in `resource/sd-files/models/VAE`.
 
-This files will be linked into webui or automatic files.
+This files will be linked into webui (or automatic) files.
 
 ## Setting preset
 
 add `resource/preset/*.preset.json` file for using preset-based image generation.    
-(for command: `/generate basic`)
+(for command: `/generate`)
 
 preset interface here
 
