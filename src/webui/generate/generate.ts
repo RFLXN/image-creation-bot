@@ -2,7 +2,7 @@
 // @ts-ignore
 import camelize from "camelize";
 import {
-    CreatedImage, ImageInfo, Lora, Model, RawInfoCreatedImage
+    CreatedImage, HighResFix, ImageInfo, Lora, Model, RawInfoCreatedImage
 } from "../../type/image";
 import { createLoraTag } from "../lora";
 import { txt2img, Txt2imgReq } from "../api";
@@ -22,6 +22,7 @@ interface ImageGenerateOption {
     batchSize?: number;
     cfgScale?: number;
     scriptArgs?: string[];
+    highResFix?: HighResFix;
 }
 
 const generate = async (option: ImageGenerateOption): Promise<Result<CreatedImage | RawInfoCreatedImage>> => {
@@ -66,6 +67,37 @@ const generate = async (option: ImageGenerateOption): Promise<Result<CreatedImag
             o = omit(o, "scriptName");
         } else {
             o.scriptName = option.scriptArgs[0];
+        }
+
+        if (option.highResFix) {
+            const opt = option.highResFix;
+            o.enableHr = true;
+
+            if (!opt.upscaler) {
+                o.hrUpscaler = "Latent";
+            } else {
+                o.hrUpscaler = opt.upscaler;
+            }
+
+            if (opt.denoisingStrength) {
+                o.denoisingStrength = opt.denoisingStrength;
+            }
+
+            if (opt.steps) {
+                o.hrSecondPassSteps = opt.steps;
+            }
+
+            if (opt.upscaleBy) {
+                o.hrScale = opt.upscaleBy;
+            }
+
+            if (opt.resizeHeight) {
+                o.hrResizeY = opt.resizeHeight;
+            }
+
+            if (opt.resizeWidth) {
+                o.hrResizeX = opt.resizeWidth;
+            }
         }
 
         const res = await txt2img(o);

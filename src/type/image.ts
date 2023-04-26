@@ -49,6 +49,18 @@ interface Lora {
     weight?: number;
 }
 
+type Upscaler = "None" | "Lanczos" | "Nearest" | "ESRGAN_4x" | "LDSR" | "R-ESRGAN 4x+"
+| "R-ESRGAN 4x+ Anime6B" | "ScuNET GAN" | "ScuNET PSNR" | "SwinIR 4x";
+
+interface HighResFix {
+    resizeWidth?: number;
+    resizeHeight?: number;
+    upscaleBy?: number;
+    upscaler?: Upscaler;
+    steps?: number;
+    denoisingStrength?: number;
+}
+
 interface Preset {
     id: number;
     description: string;
@@ -64,9 +76,10 @@ interface Preset {
     batchSize?: number;
     cfgScale?: number;
     scriptArgs?: string[];
+    highResFix?: HighResFix;
 }
 
 export {
     RawInfoCreatedImage, Model, Preset, Lora,
-    CreatedImage, ImageInfo
+    CreatedImage, ImageInfo, Upscaler, HighResFix
 };

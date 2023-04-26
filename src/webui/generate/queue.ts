@@ -91,9 +91,55 @@ const applyEventHandlers = () => {
     const manager = QueueManager.instance;
 
     manager.on("queueAdded", (queue) => {
-        log(`Image generate queue added: ${queue.id} (from user: ${queue.userId})\n\t`
-            + `with model: ${queue.option.model.name}\n\t`
-            + `with prompt: ${queue.option.prompt}`);
+        let str = `Image generate queue added: ${queue.id} (from user: ${queue.userId})`
+            + `\n\twith size: ${queue.option.width} x ${queue.option.height}`
+            + `\n\twith model: ${queue.option.model.name}`
+            + `\n\twith step: ${queue.option.steps}`
+            + `\n\twith batch size: ${queue.option.batchSize ? queue.option.batchSize : 1}`
+            + `${queue.option.sampler ? `\n\twith sampler: ${queue.option.sampler}` : ""}`
+            + `${queue.option.vae ? `\n\twith vae: ${queue.option.vae}` : ""}`;
+
+        if (queue.option.lora) {
+            queue.option.lora.map((l) => {
+                str += `\n\twith lora: ${l.name}`;
+
+                if (l.weight) {
+                    str += ` (${l.weight})`;
+                }
+            });
+        }
+
+        str += `\n\twith prompt: ${queue.option.prompt}`
+            + `${queue.option.negativePrompt ? `\n\twith negative prompt: ${queue.option.negativePrompt}` : ""}`
+            + `${queue.option.cfgScale ? `\n\twith cfg scale: ${queue.option.cfgScale}}` : ""}`;
+
+        if (queue.option.highResFix) {
+            const hr = queue.option.highResFix;
+
+            str += `\n\twith HighRes.fix - ${hr.upscaler ? hr.upscaler : "Latent"}`;
+
+            if (hr.steps) {
+                str += ` / ${hr.steps} steps`;
+            }
+
+            if (hr.denoisingStrength) {
+                str += ` / denoising ${hr.denoisingStrength}`;
+            }
+
+            if (hr.upscaleBy) {
+                str += ` (x${hr.upscaleBy} size)`;
+            } else if (hr.resizeWidth && hr.resizeHeight) {
+                str += ` (size: ${hr.resizeWidth} x ${hr.resizeHeight})`;
+            } else if (hr.resizeWidth && !hr.resizeHeight) {
+                str += ` (width: ${hr.resizeWidth})`;
+            } else if (hr.resizeHeight && !hr.resizeWidth) {
+                str += ` (height: ${hr.resizeHeight})`;
+            }
+        }
+
+        str += `${queue.option.scriptArgs ? `\n\twith script args: ${queue.option.scriptArgs}` : ""}`;
+
+        log(str);
     });
 
     manager.on("queueRejected", (queue) => {

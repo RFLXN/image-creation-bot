@@ -67,6 +67,10 @@ const presetBasedGenerate = async (
         o.scriptArgs = preset.scriptArgs;
     }
 
+    if (preset.highResFix) {
+        o.highResFix = preset.highResFix;
+    }
+
     const queue = QueueManager.instance.addQueue({ userId: option.userId, option: o as ImageGenerateOption });
 
     if (beforeGen) beforeGen(queue);

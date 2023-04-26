@@ -1,9 +1,7 @@
 import { post } from "./share";
+import { Upscaler } from "../../type/image";
 
 const PATH = "/sdapi/v1/extra-single-image";
-
-type Upscaler = "None" | "Lanczos" | "Nearest" | "ESRGAN_4x" | "LDSR" | "R-ESRGAN 4x+"
-| "R-ESRGAN 4x+ Anime6B" | "ScuNET GAN" | "ScuNET PSNR" | "SwinIR 4x";
 
 enum ResizeMode {
     Amount = 0,
