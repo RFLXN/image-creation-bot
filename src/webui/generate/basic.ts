@@ -1,11 +1,12 @@
 import { getPreset } from "../preset";
 import { FailResult } from "../../type/result";
-import { generate } from "./generate";
+import { generate, ImageGenerateOption } from "./generate";
 import QueueManager, { AddedImageGenerateQueue } from "./queue";
 
 interface BasicGenerateOption {
     userId: string;
     prompt: string;
+    negativePrompt?: string;
     presetId: number;
 }
 
@@ -18,25 +19,56 @@ const basicGenerate = async (option: BasicGenerateOption, beforeGen?: (queue: Ad
         } as FailResult;
     }
 
-    const o = {
-        prompt: preset.defaultPrompt ? `${preset.defaultPrompt}, ${option.prompt}` : option.prompt,
+    const o: Partial<ImageGenerateOption> = {
         model: preset.model,
-        vae: preset.vae ? preset.vae : null,
-        lora: preset.lora ? preset.lora : null,
         height: preset.height,
         width: preset.width,
-        sampler: preset.sampler ? preset.sampler : null,
-        steps: preset.steps,
-        batchSize: preset.batchSize ? preset.batchSize : null,
-        cfgScale: preset.cfgScale ? preset.cfgScale : null,
-        scriptArgs: preset.scriptArgs ? preset.scriptArgs : null
+        steps: preset.steps
     };
 
-    const queue = QueueManager.instance.addQueue({ userId: option.userId, option: o });
+    if (preset.defaultPrompt) {
+        o.prompt = `${preset.defaultPrompt}, ${option.prompt}`;
+    } else {
+        o.prompt = option.prompt;
+    }
+
+    if (preset.defaultNegativePrompt && option.negativePrompt) {
+        o.negativePrompt = `${preset.defaultNegativePrompt}, ${option.negativePrompt}`;
+    } else if (preset.defaultNegativePrompt && !option.negativePrompt) {
+        o.negativePrompt = preset.defaultNegativePrompt;
+    } else if (!preset.defaultNegativePrompt && option.negativePrompt) {
+        o.negativePrompt = option.negativePrompt;
+    }
+
+    if (preset.vae) {
+        o.vae = preset.vae;
+    }
+
+    if (preset.lora) {
+        o.lora = preset.lora;
+    }
+
+    if (preset.sampler) {
+        o.sampler = preset.sampler;
+    }
+
+    if (preset.batchSize) {
+        o.batchSize = preset.batchSize;
+    }
+
+    if (preset.cfgScale) {
+        o.cfgScale = preset.cfgScale;
+    }
+
+    if (preset.scriptArgs) {
+        o.scriptArgs = preset.scriptArgs;
+    }
+
+    const queue = QueueManager.instance.addQueue({ userId: option.userId, option: o as ImageGenerateOption });
 
     if (beforeGen) beforeGen(queue);
 
-    const result = await generate(o);
+    const result = await generate(o as ImageGenerateOption);
 
     if (result.success) {
         QueueManager.instance.pop();

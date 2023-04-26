@@ -57,6 +57,7 @@ interface Preset {
     lora?: Lora[];
     sampler?: string;
     defaultPrompt?: string;
+    defaultNegativePrompt?: string;
     steps: number;
     height: number;
     width: number;

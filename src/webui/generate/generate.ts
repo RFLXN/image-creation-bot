@@ -50,8 +50,7 @@ const generate = async (option: ImageGenerateOption): Promise<Result<CreatedImag
             sendImages: true,
             batchSize: option.batchSize ? option.batchSize : 1,
             cfgScale: option.cfgScale,
-            scriptArgs: option.scriptArgs,
-            scriptName: option.scriptArgs[0]
+            scriptArgs: option.scriptArgs
         };
 
         if (!option.negativePrompt) {
@@ -65,6 +64,8 @@ const generate = async (option: ImageGenerateOption): Promise<Result<CreatedImag
         if (!option.scriptArgs) {
             o = omit(o, "scriptArgs");
             o = omit(o, "scriptName");
+        } else {
+            o.scriptName = option.scriptArgs[0];
         }
 
         const res = await txt2img(o);

@@ -1,4 +1,4 @@
-import { ChatInputCommandInteraction, SlashCommandBuilder } from "discord.js";
+import { ChatInputCommandInteraction, EmbedBuilder, SlashCommandBuilder } from "discord.js";
 import { SlashCommand } from "../../type/discord-command";
 import { getScripts } from "../../webui/api";
 
@@ -11,7 +11,37 @@ const script: SlashCommand = {
         }),
     exec: async (interaction: ChatInputCommandInteraction) => {
         const scripts = await getScripts();
-        console.log(scripts);
+
+        let t2iStr = "";
+
+        scripts.txt2img.map((s) => {
+            t2iStr += `- ${s}\n`;
+        });
+
+        let i2iStr = "";
+
+        scripts.img2img.map((s) => {
+            i2iStr += `- ${s}\n`;
+        });
+
+        const embed = new EmbedBuilder()
+            .setTitle("Script")
+            .addFields(
+                {
+                    name: "Text to image",
+                    value: t2iStr,
+                    inline: false
+                },
+                {
+                    name: "Image to image",
+                    value: i2iStr,
+                    inline: false
+                }
+            );
+
+        await interaction.reply({
+            embeds: [embed]
+        });
     }
 };
 

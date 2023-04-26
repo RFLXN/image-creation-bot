@@ -16,7 +16,7 @@ import {
 } from "discord.js";
 import { getPresetList } from "../../../webui/preset";
 import { basicGenerate } from "../../../webui/generate/basic";
-import QueueManager from "../../../webui/generate/queue";
+import QueueManager, { AddedImageGenerateQueue } from "../../../webui/generate/queue";
 
 const doBasic = async (interaction: ChatInputCommandInteraction) => {
     const embed = new EmbedBuilder()
@@ -74,6 +74,14 @@ const doBasic = async (interaction: ChatInputCommandInteraction) => {
                         .setStyle(TextInputStyle.Paragraph)
                         .setRequired(true)
                         .setCustomId(`gen-prompt-input-${interaction.id}`)
+                ),
+            new ActionRowBuilder<TextInputBuilder>()
+                .addComponents(
+                    new TextInputBuilder()
+                        .setLabel("Negative prompt")
+                        .setStyle(TextInputStyle.Paragraph)
+                        .setRequired(false)
+                        .setCustomId(`gen-neg-input-${interaction.id}`)
                 )
         );
 
@@ -92,12 +100,17 @@ const doBasic = async (interaction: ChatInputCommandInteraction) => {
     await message.delete();
 
     let prompt = "";
+    let negativePrompt = "";
 
     awaitedModal.components.map((c) => c.components.map((input) => {
         const i = input as TextInputModalData;
 
         if (i.customId == `gen-prompt-input-${interaction.id}`) {
             prompt = i.value;
+        }
+
+        if (i.customId == `gen-neg-input-${interaction.id}`) {
+            negativePrompt = i.value;
         }
     }));
 
@@ -109,11 +122,14 @@ const doBasic = async (interaction: ChatInputCommandInteraction) => {
 
     let modalMessagePromise: Promise<Message<boolean>>;
 
+    let q: AddedImageGenerateQueue;
     const result = await basicGenerate({
         userId: interaction.user.id,
         prompt,
+        negativePrompt: negativePrompt || null,
         presetId
     }, (queue) => {
+        q = queue;
         const manager = QueueManager.instance;
 
         const queueEmbed = new EmbedBuilder()
@@ -132,7 +148,9 @@ const doBasic = async (interaction: ChatInputCommandInteraction) => {
 
     if (result.success) {
         const generatedEmbed = new EmbedBuilder()
-            .setTitle("Image Generated!");
+            .setTitle("Image Generated!")
+            .setDescription(`ID: ${q.id}\nStyle: ${preset.description}\nPrompt: ${prompt}`
+                + `${negativePrompt != "" ? `\nNegative Prompt: ${negativePrompt}` : ""}`);
 
         await modalMessage.reply({
             embeds: [generatedEmbed],
