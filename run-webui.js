@@ -2,6 +2,7 @@ const {resolve} = require("path");
 const {spawn} = require("child_process")
 const {platform, exit, stdout, stderr, stdin} = require("node:process");
 const {createLogger, format, transports} = require("winston");
+const moment = require("moment");
 
 const infoLogger = createLogger({
     format: format.simple(),
@@ -53,7 +54,6 @@ const logExit = () => {
 }
 
 const CONFIG = require("./resource/webui.json");
-const moment = require("moment/moment");
 
 const WEBUI_PATH = resolve(__dirname, "sd-server", "stable-diffusion-webui");
 const WEBUI_SCRIPT = platform === "win32" ? "webui-user.bat" : "webui.sh";
