@@ -7,7 +7,8 @@
 
 ## Scripts
 
-* `init.sh` (or `init.bat`) - run `npm install` for download discord bot dependencies
+* `init.sh` (or `init.bat`) - run `npm install` for download discord bot dependencies    
+  run this only one at first time
 * `launch-bot.sh` (or `launch-bot.bat`) - run `npm run start:bot` for launch discord bot
 * `launch-webui.sh` (or `launch-webui.bat`) - run `npm run start:webui` for launch webui API server
 
@@ -18,7 +19,7 @@
 * Put your Lora models in `resource/sd-files/models/Lora`.
 * Put your VAE models in `resource/sd-files/models/VAE`.
 
-This files will be copied into webui or automatic files.
+This files will be linked into webui or automatic files.
 
 ## Setting preset
 
@@ -43,6 +44,7 @@ interface Preset {
     }[];
     sampler?: string;
     defaultPrompt?: string;
+    defaultNegativePromt?: string;
     steps: number;
     height: number;
     width: number;
