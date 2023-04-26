@@ -7,8 +7,9 @@
 
 ## Scripts
 
-* start:bot (`npm run start:bot`): Start discord bot.
-* start:webui (`npm run start:webui`): Start webui API server.
+* `init.sh` (or `init.bat`) - run `npm install` for download discord bot dependencies
+* `launch-bot.sh` (or `launch-bot.bat`) - run `npm run start:bot` for launch discord bot
+* `launch-webui.sh` (or `launch-webui.bat`) - run `npm run start:webui` for launch webui API server
 
 ## Setting models
 
