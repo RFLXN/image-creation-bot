@@ -49,7 +49,12 @@ interface Preset {
     height: number;
     width: number;
     batchSize?: number;
-    scriptArgs?: string[];
+    script?: {
+        scriptName: string;
+        params: {
+            [key: string]: (string, number, boolean);
+        }
+    }
 }
 ```
 
@@ -62,6 +67,60 @@ After that edit your discord bot token.
 
 copy `resource/webui.example.json` and paste `resource/webui.json`.    
 If you want to use AUTOMATIC, edit it to true
+
+## Script
+
+You can use script by adding `script` attribute in preset json file.
+
+### List of available scripts
+
+* Detection Detailer
+    * scriptName: "detection detailer"
+    * "params": refer to following typescript class
+
+```typescript
+// in src/webui/script/dddetailer.ts
+type DddetailerModel = "bbox\\mmdet_anime-face_yolov3.pth [51e1af4a]"
+    | "segm\\mmdet_dd-person_mask2former.pth [3848e764]";
+
+class DddetailerParams implements ScriptParams {
+    [key: string]: (string | number | boolean);
+
+    modelA: DddetailerModel;
+
+    confidenceA?: number;
+
+    dilationFactorA?: number;
+
+    xOffsetA?: number;
+
+    yOffsetA?: number;
+
+    preProcessB?: boolean;
+
+    bitwiseOperation?: "None" | "A&B" | "A-B";
+
+    modelB?: DddetailerModel;
+
+    confidenceB?: number;
+
+    dilationFactorB?: number;
+
+    xOffsetB?: number;
+
+    yOffsetB?: number;
+
+    maskBlur?: number;
+
+    denoisingStrength?: number;
+
+    inpaintFullResolution?: boolean;
+
+    inpaintFullResolutionPadding?: number;
+
+    cfgScale?: number;
+}
+```
 
 ## stable-diffusion-webui API
 
