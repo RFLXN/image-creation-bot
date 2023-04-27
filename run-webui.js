@@ -1,6 +1,6 @@
 const {resolve} = require("path");
 const {spawn} = require("child_process")
-const {platform, exit, stdout, stderr, stdin} = require("node:process");
+const {on, platform, exit, stdout, stderr, stdin} = require("node:process");
 const {createLogger, format, transports} = require("winston");
 const moment = require("moment");
 
@@ -81,7 +81,6 @@ const runWebUi = () => {
     stdin.pipe(webuiProcess.stdin);
 
     webuiProcess.on("exit", (code) => {
-        logExit();
         exit(code);
     });
 };
@@ -106,10 +105,13 @@ const runAutomatic = () => {
     stdin.pipe(automaticProcess.stdin);
 
     automaticProcess.on("exit", (code) => {
-        logExit();
         exit(code);
     });
 };
+
+process.on("exit", () => {
+    logExit();
+});
 
 if (CONFIG.altToAutomatic) {
     runAutomatic();

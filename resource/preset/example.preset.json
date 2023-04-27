@@ -2,13 +2,31 @@
   "id": 1,
   "description": "example",
   "model": {
-    "name": "v1-5-pruned-emaonly.safetensors",
-    "hash": "6ce0161689b3853acaa03779ec93eafe75a02f4ced659bee03f50797806fa2fa"
+    "name": "YOUR_MODEL_NAME_HERE.safetensors",
+    "hash": "YOUR_SHA256_MODEL_HASH_HERE"
   },
   "sampler": "DPM2 Karras",
+  "lora": [
+    {
+      "name": "YOUR_LORA_NAME_HERE",
+      "weight": 1
+    }
+  ],
+  "vae": "YOUR_VAE_NAME_HERE.vae.pt",
   "defaultPrompt": "masterpiece, high quality",
+  "defaultNegativePrompt": "low quality",
   "steps": 21,
   "height": 512,
   "width": 512,
-  "batchSize": 1
+  "batchSize": 1,
+  "highResFix": {
+    "upscaleBy": 2,
+    "denoisingStrength": 0.5
+  },
+  "script": {
+    "scriptName": "detection detailer",
+    "params": {
+      "modelA": "bbox\\mmdet_anime-face_yolov3.pth [51e1af4a]"
+    }
+  }
 }

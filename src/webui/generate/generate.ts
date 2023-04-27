@@ -21,7 +21,7 @@ interface ImageGenerateOption {
     sampler?: string;
     batchSize?: number;
     cfgScale?: number;
-    scriptArgs?: string[];
+    scriptArgs?: (string | number | boolean)[];
     highResFix?: HighResFix;
 }
 
@@ -66,7 +66,7 @@ const generate = async (option: ImageGenerateOption): Promise<Result<CreatedImag
             o = omit(o, "scriptArgs");
             o = omit(o, "scriptName");
         } else {
-            o.scriptName = option.scriptArgs[0];
+            o.scriptName = option.scriptArgs[0] as string;
         }
 
         if (option.highResFix) {

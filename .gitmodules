@@ -4,3 +4,6 @@
 [submodule "sd-server/stable-diffusion-webui"]
 	path = sd-server/stable-diffusion-webui
 	url = https://github.com/AUTOMATIC1111/stable-diffusion-webui.git
+[submodule "resource/sd-files/extensions/dddetailer"]
+	path = resource/sd-files/extensions/dddetailer
+	url = https://github.com/Bing-su/dddetailer.git

@@ -49,6 +49,10 @@ interface Lora {
     weight?: number;
 }
 
+type ScriptParams = Record<string, string | number | boolean>;
+
+type ScriptParamGenerator<T extends ScriptParams> = (args: T) => (string | number | boolean)[];
+
 type Upscaler = "None" | "Lanczos" | "Nearest" | "ESRGAN_4x" | "LDSR" | "R-ESRGAN 4x+"
 | "R-ESRGAN 4x+ Anime6B" | "ScuNET GAN" | "ScuNET PSNR" | "SwinIR 4x";
 
@@ -59,6 +63,11 @@ interface HighResFix {
     upscaler?: Upscaler;
     steps?: number;
     denoisingStrength?: number;
+}
+
+interface Script {
+    scriptName: string;
+    params: ScriptParams;
 }
 
 interface Preset {
@@ -75,11 +84,12 @@ interface Preset {
     width: number;
     batchSize?: number;
     cfgScale?: number;
-    scriptArgs?: string[];
     highResFix?: HighResFix;
+    script?: Script;
 }
 
 export {
     RawInfoCreatedImage, Model, Preset, Lora,
-    CreatedImage, ImageInfo, Upscaler, HighResFix
+    CreatedImage, ImageInfo, Upscaler, HighResFix,
+    ScriptParams, ScriptParamGenerator, Script
 };

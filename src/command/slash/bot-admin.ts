@@ -17,6 +17,7 @@ const botAdmin: SlashCommand = {
                         value: `${i}`
                     }))
                 )
+                .setRequired(true)
         ),
     exec: async (interaction: ChatInputCommandInteraction) => {
         if (!(await isOwner(interaction.user.id))) {

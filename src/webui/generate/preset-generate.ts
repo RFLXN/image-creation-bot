@@ -2,6 +2,7 @@ import { getPreset } from "../preset";
 import { FailResult } from "../../type/result";
 import { generate, ImageGenerateOption } from "./generate";
 import QueueManager, { AddedImageGenerateQueue } from "./queue";
+import { scriptIndex } from "../script/index";
 
 interface PresetGenerateOption {
     userId: string;
@@ -63,8 +64,9 @@ const presetBasedGenerate = async (
         o.cfgScale = preset.cfgScale;
     }
 
-    if (preset.scriptArgs) {
-        o.scriptArgs = preset.scriptArgs;
+    if (preset.script) {
+        const script = scriptIndex.find((s) => s.name == preset.script.scriptName);
+        o.scriptArgs = script.generator(preset.script.params);
     }
 
     if (preset.highResFix) {
