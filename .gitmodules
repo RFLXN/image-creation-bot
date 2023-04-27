@@ -1,6 +1,3 @@
-[submodule "resource/sd-files/extensions/ddetailer"]
-	path = resource/sd-files/extensions/ddetailer
-	url = https://github.com/dustysys/ddetailer.git
 [submodule "sd-server/automatic"]
 	path = sd-server/automatic
 	url = https://github.com/vladmandic/automatic.git

@@ -36,4 +36,6 @@ interface ExtraImageRes {
 
 const extraImage = async (data: Partial<ExtraImageReq>) => post<Partial<ExtraImageReq>, ExtraImageRes>(PATH, data);
 
-export { ExtraImageReq, ExtraImageRes, extraImage };
+export {
+    ResizeMode, ExtraImageReq, ExtraImageRes, extraImage
+};
